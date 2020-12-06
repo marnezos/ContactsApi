@@ -23,6 +23,7 @@ namespace Contacts.Domain.DBModels
 
         [StringLength(20)]
         public string MobilePhoneNumber { get; set; }
+
         public virtual ICollection<ContactSkill> ContactSkills { get; set; }
     }
 }

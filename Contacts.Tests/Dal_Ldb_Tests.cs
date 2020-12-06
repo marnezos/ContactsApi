@@ -11,28 +11,42 @@ namespace Contacts.Tests
     [TestClass]
     public class Dal_Ldb_Tests
     {
-        [TestMethod]
-        public void DalShouldBeAbleToCreateANewDb()
+        private static string _tempDbFilename;
+
+        [ClassInitialize]
+        public static void InitDb(TestContext context)
         {
             DataLayerInfrastructure infrastructure = new Infrastructure();
 
-            string tempDbFilename = $"/{Guid.NewGuid()}.db";
+            _tempDbFilename = $"/{Guid.NewGuid()}.db";
 
             //Prepare a dummy config for the temporary db file
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
-                .AddInMemoryCollection(new List<KeyValuePair<string,string>>()
+                .AddInMemoryCollection(new List<KeyValuePair<string, string>>()
                 {
-                    new KeyValuePair<string, string>("litedb-path", tempDbFilename)
+                    new KeyValuePair<string, string>("litedb-path", _tempDbFilename)
                 });
 
             IConfigurationRoot config = configurationBuilder.Build();
 
             infrastructure.EnsureStorageCreated(config);
+        }
 
-            Assert.IsTrue(File.Exists(tempDbFilename));
 
-            File.Delete(tempDbFilename);
+        [TestMethod]
+        public void DalShouldBeAbleToCreateANewDb()
+        {
+            //Infra should have a file created at this location
+            Assert.IsTrue(File.Exists(_tempDbFilename));
 
         }
+
+        [ClassCleanup]
+        public static void TearDownTemporaryObjects()
+        {
+            //Clean up
+            File.Delete(_tempDbFilename);
+        }
+
     }
 }
