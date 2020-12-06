@@ -13,7 +13,7 @@ namespace Contacts.Dal.Ldb
 
         public string  _dbPath { get; set; }
 
-        public override void EnsureStorageCreated(IConfigurationRoot config)
+        public override void EnsureStorageCreated(IConfiguration config)
         {
             //Get the path from the settings
             _dbPath = config.GetSection("litedb-path").Value;

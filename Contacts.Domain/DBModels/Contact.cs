@@ -13,9 +13,6 @@ namespace Contacts.Domain.DBModels
         [StringLength(50)]
         public string LastName { get; set; }
 
-        [StringLength(100)]
-        public string FullName { get; set; }
-
         public virtual Address MainAddress { get; set; }
 
         [StringLength(255)]

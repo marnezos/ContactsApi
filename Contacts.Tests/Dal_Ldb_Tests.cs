@@ -30,8 +30,8 @@ namespace Contacts.Tests
                     new KeyValuePair<string, string>("litedb-path", _tempDbFilename)
                 });
 
-            IConfigurationRoot config = configurationBuilder.Build();
-
+            IConfiguration config = configurationBuilder.Build();
+            
             _infrastructure.EnsureStorageCreated(config);
         }
 
@@ -53,7 +53,6 @@ namespace Contacts.Tests
                 Email = "blah@example.com",
                 FirstName = "blah",
                 LastName = "bluh",
-                FullName = "Mr Blah Bluh",
                 MainAddress = new Address()
                 {
                     City = "theCity",
@@ -80,7 +79,6 @@ namespace Contacts.Tests
                 Email = "aaa@example.com",
                 FirstName = "test1",
                 LastName = "test2 ",
-                FullName = "Mr Test1 Test2",
                 MainAddress = new Address()
                 {
                     City = "Nice City",
@@ -126,7 +124,6 @@ namespace Contacts.Tests
                 Email = "bbb@example.com",
                 FirstName = "test1",
                 LastName = "test2 ",
-                FullName = "Mr Test1 Test2",
                 MainAddress = new Address()
                 {
                     City = "Another City",

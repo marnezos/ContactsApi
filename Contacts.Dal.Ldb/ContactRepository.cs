@@ -4,7 +4,7 @@ using LiteDB;
 
 namespace Contacts.Dal.Ldb
 {
-    public class ContactRepository : BaseRepository<Contact>
+    public class ContactRepository : BaseRepository<Contact>, IContactRepository
     {
         public ContactRepository(DataLayerInfrastructure<ILiteDatabase> infrastructure) : base(infrastructure)
         {
