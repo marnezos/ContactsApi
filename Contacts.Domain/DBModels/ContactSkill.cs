@@ -6,8 +6,8 @@ namespace Contacts.Domain.DBModels
     {
         public int ContactSkillId { get; set; }
 
-        [StringLength(50)]
-        public string Name { get; set; }
+        public virtual Skill Skill { get; set; }
+
         public ProficiencyScale Level { get; set; }
     }
 

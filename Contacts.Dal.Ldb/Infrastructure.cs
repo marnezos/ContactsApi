@@ -11,7 +11,10 @@ namespace Contacts.Dal.Ldb
     {
         public override void EnsureStorageCreated(IConfigurationRoot config)
         {
+            //Get the path from the settings
             string dbPath = config.GetSection("litedb-path").Value;
+
+            //Create the database file if it doesn't exist yet
             using var db = new LiteDatabase(dbPath); 
         }
     }
