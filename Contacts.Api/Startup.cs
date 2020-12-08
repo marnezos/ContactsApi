@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Contacts.Dal.Ldb;
+//using Contacts.Dal.Ldb;
+using Contacts.Dal.Mem;
 using Contacts.Domain.Dal;
 using LiteDB;
 using Microsoft.AspNetCore.Builder;
@@ -33,11 +34,19 @@ namespace Contacts.Api
             services.AddSwaggerGen();
 
             services.AddScoped<IContactRepository>(sp =>
-            {
-                DataLayerInfrastructure<ILiteDatabase> infrastructure = new Infrastructure();
-                infrastructure.EnsureStorageCreated(Configuration);               
-                return new ContactRepository(infrastructure);
-            }
+                {
+                    DataLayerInfrastructure<ContactsContext> infrastructure = new Infrastructure();
+                    infrastructure.EnsureStorageCreated(Configuration);               
+                    return new ContactRepository(infrastructure);
+                }
+            );
+
+            services.AddScoped<ISkillRepository>(sp =>
+                {
+                    DataLayerInfrastructure<ContactsContext> infrastructure = new Infrastructure();
+                    infrastructure.EnsureStorageCreated(Configuration);
+                    return new SkillRepository(infrastructure);
+                }
             );
 
         }

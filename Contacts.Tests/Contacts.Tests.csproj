@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contacts.Dal.Ldb\Contacts.Dal.Ldb.csproj" />
+    <ProjectReference Include="..\Contacts.Dal.Mem\Contacts.Dal.Mem.csproj" />
     <ProjectReference Include="..\Contacts.Domain\Contacts.Domain.csproj" />
   </ItemGroup>
 
