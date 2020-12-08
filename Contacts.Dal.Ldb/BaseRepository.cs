@@ -2,6 +2,7 @@
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Contacts.Dal.Ldb
 {
@@ -17,18 +18,18 @@ namespace Contacts.Dal.Ldb
             _liteCollection = _database.GetCollection<T>();
         }
 
-        public virtual T Insert(T data)
+        public async virtual Task<T> InsertAsync(T data)
         {
             BsonValue id = _liteCollection.Insert(data);
             return _liteCollection.FindById(id);
         }
 
-        public virtual  IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAllAsync()
         {
             return _liteCollection.FindAll();
         }
 
-        public virtual T Get(int id)
+        public async virtual Task<T> GetAsync(int id)
         {
             return _liteCollection.FindById(id);
         }
@@ -38,7 +39,7 @@ namespace Contacts.Dal.Ldb
             _liteCollection.Upsert(entity);
         }
 
-        public virtual void Delete(int id)
+        public async virtual Task DeleteAsync(int id)
         {
             _liteCollection.Delete(id);
         }

@@ -1,9 +1,6 @@
 ﻿using Contacts.Domain.Dal;
 using Contacts.Domain.DBModels;
 using LiteDB;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Contacts.Dal.Ldb
 {

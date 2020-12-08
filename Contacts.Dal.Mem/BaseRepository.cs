@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Contacts.Dal.Mem
 {
@@ -15,21 +16,21 @@ namespace Contacts.Dal.Mem
             _database = infrastructure.NewDbContext();
         }
 
-        public virtual T Insert(T data)
+        public async virtual Task<T> InsertAsync(T data)
         {
             _database.Add(data);
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
             return data;
         }
 
-        public virtual  IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAllAsync()
         {
-            return _database.Set<T>();
+            return await _database.Set<T>().ToListAsync();
         }
 
-        public virtual T Get(int id)
+        public async virtual Task<T> GetAsync(int id)
         {
-            return _database.Find<T>(id);
+            return await _database.FindAsync<T>(id);
         }
 
         public virtual void Update(T entity)
@@ -38,9 +39,9 @@ namespace Contacts.Dal.Mem
             _database.SaveChanges();
         }
 
-        public virtual void Delete(int id)
+        public async virtual Task DeleteAsync(int id)
         {
-            T entity = _database.Find<T>(id);
+            T entity = await _database.FindAsync<T>(id);
             _database.Remove<T>(entity);
             _database.SaveChanges();
         }

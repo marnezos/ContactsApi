@@ -1,5 +1,4 @@
 ﻿using Contacts.Domain.Dal;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Contacts.Dal.Mem

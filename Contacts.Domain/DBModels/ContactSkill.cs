@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Contacts.Domain.DBModels
+﻿namespace Contacts.Domain.DBModels
 {
     public class ContactSkill
     {

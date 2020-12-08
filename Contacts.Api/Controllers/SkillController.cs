@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contacts.Api.Models;
+using Contacts.Api.Storage;
 using Contacts.Domain.Dal;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,45 +14,46 @@ namespace Contacts.Api.Controllers
     public class SkillController : ControllerBase
     {
 
-        private readonly ISkillRepository _skillRepository;
-        public SkillController(ISkillRepository skillRepository)
+        private readonly StorageImplementation _storageImplementation;
+        public SkillController(StorageImplementation storageImplementation)
         {
-            _skillRepository = skillRepository;
+            _storageImplementation = storageImplementation;
         }
 
         // GET: api/<SkillController>
         [HttpGet]
-        public IEnumerable<Skill> Get()
+        public async Task<IEnumerable<Skill>> GetAsync()
         {
-            return _skillRepository.GetAll().Select(s => (Skill)s);
+            IEnumerable<Domain.DBModels.Skill> skills = await _storageImplementation.SkillRepository.GetAllAsync();
+            return skills.Select(s => (Skill)s);
         }
 
         // GET api/<SkillController>/5
         [HttpGet("{id}")]
-        public Skill Get(int id)
+        public async Task<Skill> GetAsync(int id)
         {
-            return _skillRepository.Get(id);
+            return await _storageImplementation.SkillRepository.GetAsync(id);
         }
 
         // POST api/<SkillController>
         [HttpPost]
-        public void Post([FromBody] Skill value)
+        public async Task PostAsync([FromBody] Skill value)
         {
-            _skillRepository.Insert(value);
+            await _storageImplementation.SkillRepository.InsertAsync(value);
         }
 
         // PUT api/<SkillController>
         [HttpPut]
         public void Put([FromBody] Skill value)
         {
-            _skillRepository.Update(value);
+            _storageImplementation.SkillRepository.Update(value);
         }
 
         // DELETE api/<SkillController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _skillRepository.Delete(id);
+            await _storageImplementation.SkillRepository.DeleteAsync(id);
         }
     }
 }

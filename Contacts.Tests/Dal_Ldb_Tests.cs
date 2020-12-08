@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Contacts.Tests
 {
@@ -44,7 +45,7 @@ namespace Contacts.Tests
         }
 
         [TestMethod]
-        public void AddContactShouldSaveAContactInDB()
+        public async Task AddContactShouldSaveAContactInDB()
         {
             using ContactRepository repo = new ContactRepository(_infrastructure);
 
@@ -63,14 +64,14 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = repo.Insert(contact);
+            contact = await repo.InsertAsync(contact);
 
             Assert.IsNotNull(contact.ContactId);
 
         }
 
         [TestMethod]
-        public void UpdateContactShouldExhibitChanges()
+        public async Task UpdateContactShouldExhibitChanges()
         {
             using ContactRepository repo = new ContactRepository(_infrastructure);
 
@@ -89,7 +90,7 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = repo.Insert(contact);
+            contact = await repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
             //ToDo: Expand test case
@@ -105,7 +106,7 @@ namespace Contacts.Tests
 
             repo.Update(contact);
 
-            contact = repo.Get(contactId);
+            contact = await repo.GetAsync(contactId);
 
             Assert.AreEqual(contact.FirstName, expectedFirstName);
             Assert.AreEqual(contact.LastName, expectedLastName);
@@ -115,7 +116,7 @@ namespace Contacts.Tests
         }
 
         [TestMethod]
-        public void DeleteContactShouldRemoveContactPermanently()
+        public async Task DeleteContactShouldRemoveContactPermanently()
         {
             using ContactRepository repo = new ContactRepository(_infrastructure);
 
@@ -134,12 +135,12 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = repo.Insert(contact);
+            contact = await repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
-            repo.Delete(contactId);
+            repo.DeleteAsync(contactId);
 
-            contact = repo.Get(contactId);
+            contact = await repo.GetAsync(contactId);
             Assert.IsNull(contact);
         }
 

@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Text;
-using Contacts.Dal.Mem;
+﻿using Contacts.Dal.Mem;
 using Contacts.Domain.Dal;
 using Contacts.Domain.DBModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Contacts.Tests
 {
@@ -34,7 +32,7 @@ namespace Contacts.Tests
 
 
         [TestMethod]
-        public void AddContactShouldSaveAContactInDB()
+        public async Task AddContactShouldSaveAContactInDB()
         {
             using IContactRepository repo = new ContactRepository(_infrastructure);
 
@@ -53,14 +51,14 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = repo.Insert(contact);
+            contact = await repo.InsertAsync(contact);
 
             Assert.IsNotNull(contact.ContactId);
 
         }
 
         [TestMethod]
-        public void UpdateContactShouldExhibitChanges()
+        public async Task UpdateContactShouldExhibitChanges()
         {
             using ContactRepository repo = new ContactRepository(_infrastructure);
 
@@ -79,10 +77,10 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = repo.Insert(contact);
+            contact = await repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
-            //ToDo: Expand test case
+            //ToDo: Expand test case to cover everything
             string expectedFirstName = "new name";
             string expectedLastName = "new lastname";
             string expectedEmail = "test@example.com";
@@ -95,7 +93,7 @@ namespace Contacts.Tests
 
             repo.Update(contact);
 
-            contact = repo.Get(contactId);
+            contact = await repo.GetAsync(contactId);
 
             Assert.AreEqual(contact.FirstName, expectedFirstName);
             Assert.AreEqual(contact.LastName, expectedLastName);
@@ -106,7 +104,7 @@ namespace Contacts.Tests
 
 
         [TestMethod]
-        public void DeleteContactShouldRemoveContactPermanently()
+        public async Task DeleteContactShouldRemoveContactPermanently()
         {
             using ContactRepository repo = new ContactRepository(_infrastructure);
 
@@ -125,12 +123,12 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = repo.Insert(contact);
+            contact = await repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
-            repo.Delete(contactId);
+            repo.DeleteAsync(contactId);
 
-            contact = repo.Get(contactId);
+            contact = await repo.GetAsync(contactId);
             Assert.IsNull(contact);
         }
 

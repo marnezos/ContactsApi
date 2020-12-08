@@ -1,11 +1,8 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contacts.Api.Models;
+using Contacts.Api.Storage;
 using Contacts.Domain.Dal;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,37 +12,36 @@ namespace Contacts.Api.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        private readonly IContactRepository _contactRepository;
-        private readonly ISkillRepository _skillRepository;
+        private readonly StorageImplementation _storageImplementation;
 
-        public ContactController(IContactRepository contactRepository, ISkillRepository skillRepository)
+        public ContactController(StorageImplementation storageImplementation)
         {
-            _contactRepository = contactRepository;
-            _skillRepository = skillRepository;
+            _storageImplementation = storageImplementation;
         }
 
         // GET: api/<ContactController>
         [HttpGet]
-        public IEnumerable<Contact> Get()
+        public async Task<IEnumerable<Contact>> GetAsync()
         {
-            return _contactRepository.GetAll().Select(c => (Contact)c);
+            IEnumerable<Domain.DBModels.Contact> contacts = await _storageImplementation.ContactRepository.GetAllAsync();
+            return contacts.Select(c => (Contact)c);
         }
 
         // GET api/<ContactController>/5
         [HttpGet("{id}")]
-        public Contact Get(int id)
+        public async Task<Contact> GetAsync(int id)
         {
-            return _contactRepository.Get(id);
+            return await _storageImplementation.ContactRepository.GetAsync(id);
         }
 
         // POST api/<ContactController>
         [HttpPost]
-        public void Post([FromBody] Contact value)
+        public async Task PostAsync([FromBody] Contact value)
         {
-            _contactRepository.Insert(value);
+            await _storageImplementation.ContactRepository.InsertAsync(value);
             foreach (ContactSkill contactSkill in value.ContactSkills)
             {
-                _skillRepository.Update(contactSkill.Skill);
+                _storageImplementation.SkillRepository.Update(contactSkill.Skill);
             }
         }
 
@@ -53,14 +49,14 @@ namespace Contacts.Api.Controllers
         [HttpPut]
         public void Put([FromBody] Contact value)
         {
-            _contactRepository.Update(value);
+            _storageImplementation.ContactRepository.Update(value);
         }
 
         // DELETE api/<ContactController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _contactRepository.Delete(id);
+            await _storageImplementation.ContactRepository.DeleteAsync(id);
         }
     }
 }
