@@ -6,7 +6,7 @@ namespace Contacts.Api.Models
 {
     public class Contact
     {
-        public int? ContactId { get; set; }
+        public int ContactId { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -39,6 +39,8 @@ namespace Contacts.Api.Models
         [DataType(DataType.PhoneNumber)]
         public string MobilePhoneNumber { get; set; }
 
+        [Required]
+        [MinLength(1)]
         public virtual List<ContactSkill> ContactSkills { get; set; }
 
 
@@ -47,7 +49,7 @@ namespace Contacts.Api.Models
             if (contact == null) return null;
             return new Domain.DBModels.Contact()
             {
-                ContactId = (int)contact.ContactId,
+                ContactId = contact.ContactId,
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
                 Email = contact.Email,

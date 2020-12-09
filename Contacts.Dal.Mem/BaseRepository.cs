@@ -8,42 +8,42 @@ namespace Contacts.Dal.Mem
 {
     public abstract class BaseRepository<T> : IRepository<T> where T:class
     {
-        private readonly DbContext _database;
+        protected DbContext DatabaseContext { get; set; }
         private readonly bool _disposed = false;
 
         protected BaseRepository(DataLayerInfrastructure<ContactsContext> infrastructure)
         {
-            _database = infrastructure.GetDbContext();
+            DatabaseContext = infrastructure.GetDbContext();
         }
 
         public async virtual Task<T> InsertAsync(T data)
         {
-            _database.Add(data);
-            await _database.SaveChangesAsync();
+            DatabaseContext.Add(data);
+            await DatabaseContext.SaveChangesAsync();
             return data;
         }
 
         public async virtual Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _database.Set<T>().ToListAsync();
+            return await DatabaseContext.Set<T>().ToListAsync();
         }
 
         public async virtual Task<T> GetAsync(int id)
         {
-            return await _database.FindAsync<T>(id);
+            return await DatabaseContext.FindAsync<T>(id);
         }
 
         public virtual void Update(T entity)
         {
-            _database.Update(entity);
-            _database.SaveChanges();
+            DatabaseContext.Update(entity);
+            DatabaseContext.SaveChanges();
         }
 
         public async virtual Task DeleteAsync(int id)
         {
-            T entity = await _database.FindAsync<T>(id);
-            _database.Remove<T>(entity);
-            _database.SaveChanges();
+            T entity = await DatabaseContext.FindAsync<T>(id);
+            DatabaseContext.Remove<T>(entity);
+            DatabaseContext.SaveChanges();
         }
         
         protected virtual void Dispose(bool disposing)
@@ -52,7 +52,7 @@ namespace Contacts.Dal.Mem
             {
                 if (disposing)
                 {
-                    _database.Dispose();
+                    DatabaseContext.Dispose();
                 }
             }
         }

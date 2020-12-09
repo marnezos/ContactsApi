@@ -1,4 +1,5 @@
 ﻿using Contacts.Domain.DBModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contacts.Api.Models
 {
@@ -6,8 +7,10 @@ namespace Contacts.Api.Models
     {
         public int ContactSkillId { get; set; }
 
+        [Required]
         public virtual Skill Skill { get; set; }
 
+        [Required]
         public ProficiencyScale Level { get; set; }
 
         public static implicit operator Domain.DBModels.ContactSkill(ContactSkill contactSkill)

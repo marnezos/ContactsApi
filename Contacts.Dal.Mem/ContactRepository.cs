@@ -14,8 +14,9 @@ namespace Contacts.Dal.Mem
 
         public ContactRepository(DataLayerInfrastructure<ContactsContext> infrastructure) : base(infrastructure)
         {
-            _database = infrastructure.GetDbContext();
+            _database = (ContactsContext)DatabaseContext;
         }
+
 
         public async override Task<Contact> GetAsync(int id)
         {
@@ -25,6 +26,19 @@ namespace Contacts.Dal.Mem
         public async override Task<IEnumerable<Contact>> GetAllAsync()
         {
             return await ContactsAggregate.ToListAsync();
+        }
+
+        public async override Task<Contact> InsertAsync(Contact data)
+        {
+            //Always add address but reuse skill
+            foreach (ContactSkill cs in data.ContactSkills)
+            {
+                if (cs.Skill.SkillId != 0)
+                {
+                    _database.Entry(cs.Skill).State = cs.Skill.SkillId == 0 ? EntityState.Added : EntityState.Modified;
+                }
+            }
+            return await base.InsertAsync(data);
         }
 
         protected IIncludableQueryable<Contact, Skill> ContactsAggregate

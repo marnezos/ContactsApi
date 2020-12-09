@@ -4,8 +4,10 @@ namespace Contacts.Api.Models
 {
     public class Skill
     {
+        [Required]
         public int SkillId { get; set; }
 
+        [Required]
         [StringLength(255)]
         public string Name { get; set; }
 

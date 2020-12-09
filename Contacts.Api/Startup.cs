@@ -24,7 +24,7 @@ namespace Contacts.Api
             services.AddSwaggerGen();
 
             //Choose appropriate storage implementation factory (Interchangable Dals)
-            StorageImplementationFactory factory = new StorageLiteDBFactory(Configuration);
+            StorageImplementationFactory factory = new StorageMemFactory(Configuration);
             services.AddScoped(sp => factory.GetStorageImplementation());
 
         }

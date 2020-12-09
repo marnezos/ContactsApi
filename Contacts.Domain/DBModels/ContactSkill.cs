@@ -1,9 +1,12 @@
-﻿namespace Contacts.Domain.DBModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Contacts.Domain.DBModels
 {
     public class ContactSkill
     {
         public int ContactSkillId { get; set; }
 
+        [Required]
         public virtual Skill Skill { get; set; }
 
         public ProficiencyScale Level { get; set; }
