@@ -14,23 +14,26 @@ namespace Contacts.Dal.Ldb
 
         protected BaseRepository(DataLayerInfrastructure<ILiteDatabase> infrastructure)
         {
-            _database = infrastructure.NewDbContext();
+            _database = infrastructure.GetDbContext();
             _liteCollection = _database.GetCollection<T>();
         }
 
         public async virtual Task<T> InsertAsync(T data)
         {
+            await Task.CompletedTask; //LiteDB Doesn't support Async
             BsonValue id = _liteCollection.Insert(data);
             return _liteCollection.FindById(id);
         }
 
         public async virtual Task<IEnumerable<T>> GetAllAsync()
         {
+            await Task.CompletedTask; //LiteDB Doesn't support Async
             return _liteCollection.FindAll();
         }
 
         public async virtual Task<T> GetAsync(int id)
         {
+            await Task.CompletedTask; //LiteDB Doesn't support Async
             return _liteCollection.FindById(id);
         }
 
@@ -41,6 +44,7 @@ namespace Contacts.Dal.Ldb
 
         public async virtual Task DeleteAsync(int id)
         {
+            await Task.CompletedTask;
             _liteCollection.Delete(id);
         }
 

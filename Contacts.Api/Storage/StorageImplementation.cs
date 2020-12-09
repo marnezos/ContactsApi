@@ -1,11 +1,12 @@
 ﻿using Contacts.Domain.Dal;
-using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Contacts.Api.Storage
 {
-    public abstract class StorageImplementation
+    public abstract class StorageImplementation:IDisposable
     {
         public abstract IContactRepository ContactRepository {get;}
         public abstract ISkillRepository SkillRepository { get; }
+        public abstract void Dispose();
     }
 }

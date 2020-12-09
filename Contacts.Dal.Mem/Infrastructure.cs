@@ -13,7 +13,7 @@ namespace Contacts.Dal.Mem
             //Memory DB, nothing to do
         }
 
-        public override ContactsContext NewDbContext()
+        public override ContactsContext GetDbContext()
         {
             return new ContactsContext();
         }

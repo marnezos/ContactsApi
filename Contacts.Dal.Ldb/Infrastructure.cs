@@ -9,7 +9,8 @@ namespace Contacts.Dal.Ldb
     {
 
         public string  _dbPath { get; set; }
-
+        private ILiteDatabase _dbContext
+            ;
         public override void EnsureStorageCreated(IConfiguration config)
         {
             //Get the path from the settings
@@ -20,12 +21,15 @@ namespace Contacts.Dal.Ldb
 
             _ = db.GetCollection<Contact>("contact");
             _ = db.GetCollection<Skill>("skill");
-
         }
 
-        public override ILiteDatabase NewDbContext()
+        public override ILiteDatabase GetDbContext()
         {
-            return new LiteDatabase(_dbPath);
+            if (_dbContext is null)
+            {
+                _dbContext = new LiteDatabase(_dbPath);
+            }
+            return _dbContext;
         }
     }
 }

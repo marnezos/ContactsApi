@@ -13,7 +13,7 @@ namespace Contacts.Dal.Mem
 
         protected BaseRepository(DataLayerInfrastructure<ContactsContext> infrastructure)
         {
-            _database = infrastructure.NewDbContext();
+            _database = infrastructure.GetDbContext();
         }
 
         public async virtual Task<T> InsertAsync(T data)

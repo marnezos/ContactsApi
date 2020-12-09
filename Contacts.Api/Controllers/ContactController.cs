@@ -13,7 +13,6 @@ namespace Contacts.Api.Controllers
     public class ContactController : ControllerBase
     {
         private readonly StorageImplementation _storageImplementation;
-
         public ContactController(StorageImplementation storageImplementation)
         {
             _storageImplementation = storageImplementation;
@@ -39,10 +38,6 @@ namespace Contacts.Api.Controllers
         public async Task PostAsync([FromBody] Contact value)
         {
             await _storageImplementation.ContactRepository.InsertAsync(value);
-            foreach (ContactSkill contactSkill in value.ContactSkills)
-            {
-                _storageImplementation.SkillRepository.Update(contactSkill.Skill);
-            }
         }
 
         // PUT api/<ContactController>
@@ -58,5 +53,7 @@ namespace Contacts.Api.Controllers
         {
             await _storageImplementation.ContactRepository.DeleteAsync(id);
         }
+
+
     }
 }

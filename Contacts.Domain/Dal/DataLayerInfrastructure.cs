@@ -11,7 +11,7 @@ namespace Contacts.Domain.Dal
         /// <param name="config">Prepare an IConfiguration by building a Configuration builder TODO</param>
         public abstract void EnsureStorageCreated(IConfiguration config);
 
-        public abstract T NewDbContext();
+        public abstract T GetDbContext();
 
     }
 }

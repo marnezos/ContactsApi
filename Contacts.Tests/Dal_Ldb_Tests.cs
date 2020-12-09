@@ -138,7 +138,7 @@ namespace Contacts.Tests
             contact = await repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
-            repo.DeleteAsync(contactId);
+            await repo.DeleteAsync(contactId);
 
             contact = await repo.GetAsync(contactId);
             Assert.IsNull(contact);
