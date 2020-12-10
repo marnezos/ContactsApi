@@ -15,9 +15,11 @@ namespace Contacts.Domain.DBModels
         [StringLength(50)]
         public string City { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string PostalCode { get; set; }
 
+        [Required]
         //ISO-3166-1 Alpha2Code
         [StringLength(2)]
         public string CountryCode { get; set; } //ToDo: use a lookup [Country] table

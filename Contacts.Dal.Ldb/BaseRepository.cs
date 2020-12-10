@@ -8,14 +8,14 @@ namespace Contacts.Dal.Ldb
 {
     public abstract class BaseRepository<T> : IRepository<T>
     {
-        private readonly ILiteDatabase _database;
+        protected ILiteDatabase DatabaseContext { get; set; }
         private readonly ILiteCollection<T> _liteCollection;
         private readonly bool _disposed = false;
 
         protected BaseRepository(DataLayerInfrastructure<ILiteDatabase> infrastructure)
         {
-            _database = infrastructure.GetDbContext();
-            _liteCollection = _database.GetCollection<T>();
+            DatabaseContext = infrastructure.GetDbContext();
+            _liteCollection = DatabaseContext.GetCollection<T>();
         }
 
         public async virtual Task<T> InsertAsync(T data)
@@ -55,7 +55,7 @@ namespace Contacts.Dal.Ldb
             {
                 if (disposing)
                 {
-                    _database.Dispose();
+                    DatabaseContext.Dispose();
                 }
             }
         }

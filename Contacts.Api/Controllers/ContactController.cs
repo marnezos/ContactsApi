@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Contacts.Api.Models;
 using Contacts.Api.Storage;
@@ -9,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Contacts.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] //No need to check ModelState.IsValid
     public class ContactController : ControllerBase
     {
         private readonly StorageImplementation _storageImplementation;
@@ -35,9 +37,9 @@ namespace Contacts.Api.Controllers
 
         // POST api/<ContactController>
         [HttpPost]
-        public async Task PostAsync([FromBody] Contact value)
+        public async Task<Contact> PostAsync([FromBody] Contact value)
         {
-            await _storageImplementation.ContactRepository.InsertAsync(value);
+           return await _storageImplementation.ContactRepository.InsertAsync(value);           
         }
 
         // PUT api/<ContactController>

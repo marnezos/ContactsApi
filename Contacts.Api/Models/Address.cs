@@ -15,9 +15,9 @@ namespace Contacts.Api.Models
         [StringLength(50)]
         public string City { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string PostalCode { get; set; }
-
 
         /// <summary>
         /// ISO-3166-1 Alpha2Code

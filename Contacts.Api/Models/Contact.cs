@@ -44,7 +44,7 @@ namespace Contacts.Api.Models
         public virtual List<ContactSkill> ContactSkills { get; set; }
 
 
-        public static implicit operator Domain.DBModels.Contact (Contact contact)
+        public static implicit operator Domain.DBModels.Contact(Contact contact)
         {
             if (contact == null) return null;
             return new Domain.DBModels.Contact()
@@ -59,7 +59,7 @@ namespace Contacts.Api.Models
             };
         }
 
-        public static implicit operator Contact (Domain.DBModels.Contact contact)
+        public static implicit operator Contact(Domain.DBModels.Contact contact)
         {
             if (contact == null) return null;
             return new Contact()
