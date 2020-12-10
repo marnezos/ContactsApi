@@ -31,11 +31,14 @@ namespace Contacts.Dal.Mem
         public async override Task<Contact> InsertAsync(Contact data)
         {
             //Always add address but reuse skill
-            foreach (ContactSkill cs in data.ContactSkills)
+            if (data.ContactSkills != null && data.ContactSkills.Count > 0)
             {
-                if (cs.Skill.SkillId != 0)
+                foreach (ContactSkill cs in data.ContactSkills)
                 {
-                    _database.Entry(cs.Skill).State = cs.Skill.SkillId == 0 ? EntityState.Added : EntityState.Modified;
+                    if (cs.Skill.SkillId != 0)
+                    {
+                        _database.Entry(cs.Skill).State = cs.Skill.SkillId == 0 ? EntityState.Added : EntityState.Modified;
+                    }
                 }
             }
             return await base.InsertAsync(data);
@@ -43,11 +46,12 @@ namespace Contacts.Dal.Mem
 
         protected IIncludableQueryable<Contact, Skill> ContactsAggregate
         {
-            get {
-                 return _database.Contact
-                .Include(c => c.MainAddress)
-                .Include(c => c.ContactSkills)
-                .ThenInclude(cs => cs.Skill);
+            get
+            {
+                return _database.Contact
+               .Include(c => c.MainAddress)
+               .Include(c => c.ContactSkills)
+               .ThenInclude(cs => cs.Skill);
             }
         }
 
