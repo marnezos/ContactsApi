@@ -9,4 +9,5 @@
 - NoSQL consistency not enforced
 - Tests provided as samples and do not cover enough code
 - Validation relies on Annotations and automatic model validation
+- Auto Swagger through Swashbuckle
 
