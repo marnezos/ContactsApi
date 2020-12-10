@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Contacts.Api.Models;
 using Contacts.Api.Storage;
-using Contacts.Domain.Dal;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.Api.Controllers
@@ -55,7 +52,6 @@ namespace Contacts.Api.Controllers
         {
             await _storageImplementation.ContactRepository.DeleteAsync(id);
         }
-
 
     }
 }

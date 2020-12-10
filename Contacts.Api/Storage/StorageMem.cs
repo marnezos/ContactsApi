@@ -5,7 +5,10 @@ using System;
 
 namespace Contacts.Api.Storage
 {
-    public class StorageMem : StorageImplementation
+    /// <summary>
+    /// Uses a specific (Mem) data layer infrastructure to provide access to repos
+    /// </summary>
+    public class StorageMem : StorageImplementation, IDisposable
     {
         private readonly bool _disposed = false;
         private readonly IContactRepository _contactRepository;
@@ -13,6 +16,7 @@ namespace Contacts.Api.Storage
 
         public StorageMem(IConfiguration configuration)
         {
+            //Get references to repos and reuse them for this object's lifetime
             DataLayerInfrastructure<ContactsContext> infrastructure = new Infrastructure();
             infrastructure.EnsureStorageCreated(configuration);
             _contactRepository = new ContactRepository(infrastructure);
@@ -34,7 +38,6 @@ namespace Contacts.Api.Storage
                 return _skillRepository;
             }
         }
-
 
         protected virtual void Dispose(bool disposing)
         {

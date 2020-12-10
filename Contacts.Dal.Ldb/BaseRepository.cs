@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Contacts.Dal.Ldb
 {
+    /// <summary>
+    /// Serves as a generic repo handler. Override as necessary.
+    /// </summary>
+    /// <typeparam name="T">Object Collection Set</typeparam>
     public abstract class BaseRepository<T> : IRepository<T>
     {
         protected ILiteDatabase DatabaseContext { get; set; }
@@ -48,7 +52,6 @@ namespace Contacts.Dal.Ldb
             _liteCollection.Delete(id);
         }
 
-        
         protected virtual void Dispose(bool disposing)
         {
             if (!this._disposed)

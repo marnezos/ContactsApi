@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Contacts.Dal.Mem
 {
+    /// <summary>
+    /// Serves as a generic repo handler. Override as necessary.
+    /// </summary>
+    /// <typeparam name="T">Entity Collection Set</typeparam>
     public abstract class BaseRepository<T> : IRepository<T> where T:class
     {
         protected DbContext DatabaseContext { get; set; }

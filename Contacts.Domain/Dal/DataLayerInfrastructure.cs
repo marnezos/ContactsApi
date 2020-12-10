@@ -11,6 +11,10 @@ namespace Contacts.Domain.Dal
         /// <param name="config">Prepare an IConfiguration by building a Configuration builder</param>
         public abstract void EnsureStorageCreated(IConfiguration config);
 
+        /// <summary>
+        /// Returns a DbContext to be used for creating repositories
+        /// </summary>
+        /// <returns>Implementation specific database context</returns>
         public abstract T GetDbContext();
 
     }

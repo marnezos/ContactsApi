@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Contacts.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]//No need to check ModelState.IsValid
     public class SkillController : ControllerBase
     {
 

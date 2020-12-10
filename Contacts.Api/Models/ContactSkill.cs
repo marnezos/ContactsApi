@@ -11,6 +11,7 @@ namespace Contacts.Api.Models
         public virtual Skill Skill { get; set; }
 
         [Required]
+        [EnumDataType(typeof(ProficiencyScale))]
         public ProficiencyScale Level { get; set; }
 
         public static implicit operator Domain.DBModels.ContactSkill(ContactSkill contactSkill)

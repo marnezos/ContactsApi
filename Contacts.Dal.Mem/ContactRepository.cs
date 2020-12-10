@@ -44,6 +44,10 @@ namespace Contacts.Dal.Mem
             return await base.InsertAsync(data);
         }
 
+
+        /// <summary>
+        /// Returns the Aggregate of the Contact object with all dependent objects
+        /// </summary>
         protected IIncludableQueryable<Contact, Skill> ContactsAggregate
         {
             get
@@ -55,6 +59,6 @@ namespace Contacts.Dal.Mem
             }
         }
 
-        //Custom contact methods implementations go here
+        //More custom contact methods implementations go here
     }
 }

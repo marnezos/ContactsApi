@@ -6,7 +6,10 @@ using System;
 
 namespace Contacts.Api.Storage
 {
-    public class StorageLiteDB : StorageImplementation
+    /// <summary>
+    /// Uses a specific (LiteDB) data layer infrastructure to provide access to repos
+    /// </summary>
+    public class StorageLiteDB : StorageImplementation, IDisposable
     {
         private readonly bool _disposed = false;
         private readonly IContactRepository _contactRepository;
@@ -14,6 +17,7 @@ namespace Contacts.Api.Storage
 
         public StorageLiteDB(IConfiguration configuration)
         {
+            //Get references to repos and reuse them for this object's lifetime
             DataLayerInfrastructure<ILiteDatabase> infrastructure = new Infrastructure();
             infrastructure.EnsureStorageCreated(configuration);
             _contactRepository = new ContactRepository(infrastructure);
@@ -35,6 +39,7 @@ namespace Contacts.Api.Storage
                 return _skillRepository;
             }
         }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!this._disposed)
@@ -46,6 +51,7 @@ namespace Contacts.Api.Storage
                 }
             }
         }
+
         public override void Dispose()
         {
             Dispose(true);

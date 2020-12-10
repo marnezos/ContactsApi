@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Contacts.Dal.Mem
 {
+    /// <summary>
+    /// Handles broad db infra tasks
+    /// </summary>
     public class Infrastructure : DataLayerInfrastructure<ContactsContext>
     {
 

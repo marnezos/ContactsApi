@@ -2,6 +2,9 @@
 
 namespace Contacts.Api.Storage
 {
+    /// <summary>
+    /// Returns a mem db storage implementation given a config
+    /// </summary>
     public class StorageMemFactory : StorageImplementationFactory
     {
         private readonly IConfiguration _configuration;

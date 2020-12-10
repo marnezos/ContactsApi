@@ -76,7 +76,7 @@ namespace Contacts.Tests
                                     PropertyInfo property1 = property;
                                     results.Add(new ValidationResult(validationResult.ErrorMessage, validationResult.MemberNames.Select(x => property1.Name + '.' + x)));
                                 }
-                            };
+                            }
                         }
                     }
                 }
@@ -91,7 +91,7 @@ namespace Contacts.Tests
                             PropertyInfo property1 = property;
                             results.Add(new ValidationResult(validationResult.ErrorMessage, validationResult.MemberNames.Select(x => property1.Name + '.' + x)));
                         }
-                    };
+                    }
                 }
             }
 
