@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Dal.Ldb", "Contact
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Tests", "Contacts.Tests\Contacts.Tests.csproj", "{85BD0229-1C99-4E14-BBEC-94D5E558348B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.Dal.Mem", "Contacts.Dal.Mem\Contacts.Dal.Mem.csproj", "{D16D9BA3-F964-4D89-94AC-3987C4F3A48E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Dal.Mem", "Contacts.Dal.Mem\Contacts.Dal.Mem.csproj", "{D16D9BA3-F964-4D89-94AC-3987C4F3A48E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41E63FBC-9BA7-4C14-ACC8-261BDAA0BCB9}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
