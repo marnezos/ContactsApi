@@ -16,7 +16,7 @@ namespace Contacts.Tests
     {
         private static string _tempDbFilename;
         private static DataLayerInfrastructure<ILiteDatabase> _infrastructure;
-
+        private static ContactRepository _repo;
         [ClassInitialize]
         public static void InitDb(TestContext context)
         {
@@ -34,6 +34,8 @@ namespace Contacts.Tests
             IConfiguration config = configurationBuilder.Build();
             
             _infrastructure.EnsureStorageCreated(config);
+
+            _repo  = new ContactRepository(_infrastructure);
         }
 
 
@@ -47,7 +49,7 @@ namespace Contacts.Tests
         [TestMethod]
         public async Task AddContactShouldSaveAContactInDB()
         {
-            using ContactRepository repo = new ContactRepository(_infrastructure);
+            
 
             Contact contact = new Contact()
             {
@@ -64,7 +66,7 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = await repo.InsertAsync(contact);
+            contact = await _repo.InsertAsync(contact);
 
             Assert.IsNotNull(contact.ContactId);
 
@@ -73,8 +75,6 @@ namespace Contacts.Tests
         [TestMethod]
         public async Task UpdateContactShouldExhibitChanges()
         {
-            using ContactRepository repo = new ContactRepository(_infrastructure);
-
             Contact contact = new Contact()
             {
                 Email = "aaa@example.com",
@@ -90,7 +90,7 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = await repo.InsertAsync(contact);
+            contact = await _repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
             //ToDo: Expand test case
@@ -104,9 +104,9 @@ namespace Contacts.Tests
             contact.Email = expectedEmail;
             contact.MainAddress.City = expectedMainAddressCity;
 
-            repo.Update(contact);
+            _repo.Update(contact);
 
-            contact = await repo.GetAsync(contactId);
+            contact = await _repo.GetAsync(contactId);
 
             Assert.AreEqual(contact.FirstName, expectedFirstName);
             Assert.AreEqual(contact.LastName, expectedLastName);
@@ -118,8 +118,6 @@ namespace Contacts.Tests
         [TestMethod]
         public async Task DeleteContactShouldRemoveContactPermanently()
         {
-            using ContactRepository repo = new ContactRepository(_infrastructure);
-
             Contact contact = new Contact()
             {
                 Email = "bbb@example.com",
@@ -135,12 +133,12 @@ namespace Contacts.Tests
                 }
             };
 
-            contact = await repo.InsertAsync(contact);
+            contact = await _repo.InsertAsync(contact);
             int contactId = contact.ContactId;
 
-            await repo.DeleteAsync(contactId);
+            await _repo.DeleteAsync(contactId);
 
-            contact = await repo.GetAsync(contactId);
+            contact = await _repo.GetAsync(contactId);
             Assert.IsNull(contact);
         }
 
@@ -148,6 +146,7 @@ namespace Contacts.Tests
         public static void TearDownTemporaryObjects()
         {
             //Clean up
+            _repo.Dispose();
             File.Delete(_tempDbFilename);
         }
 
