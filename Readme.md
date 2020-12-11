@@ -1,6 +1,6 @@
 # Contacts Api
 
-## A sample project for testing out interchangable dal
+## A sample C# Web API project for testing out interchangeable dal
 
 > Experiment for an API that may use a SQL as well as a NoSQL backend. 
 
